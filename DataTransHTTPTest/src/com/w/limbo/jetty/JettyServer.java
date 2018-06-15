@@ -1,4 +1,4 @@
-package com.w.limbo;
+package com.w.limbo.jetty;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,6 +49,6 @@ class HelloHandler extends AbstractHandler
  
         baseRequest.setHandled(true);
         
-        System.out.print(new String(req));          
+        System.out.println(new String(req));          
     }
 }
