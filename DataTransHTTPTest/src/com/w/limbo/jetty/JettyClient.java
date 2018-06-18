@@ -24,14 +24,14 @@ public class JettyClient {
 		
 		while(true){
 			sendData(httpClient);
-			Thread.sleep(2000);
+			Thread.sleep(50);
 		}
 	}
 		
 	public static void sendData(HttpClient client) throws Exception{
 		ContentResponse response = client.newRequest("http://localhost:8080/dataload/")
 		        .method(HttpMethod.POST)
-		        .content(new ByteBufferContentProvider("text/plain", ByteBuffer.wrap(RandomGenerateCDR.generateOneGroup().getBytes())))
+		        .content(new ByteBufferContentProvider("text/plain", ByteBuffer.wrap(RandomGenerateCDR.generateSerializedCDR())))
 		        .send();
 	}
 }

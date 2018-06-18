@@ -71,11 +71,13 @@ public class CDRData {
 				"\"c_ci\":\""+getCi()+"\","+
 				"\"c_areacode\":\""+getRegionCode()+"\","+
 				"\"c_homecode\":\""+getHomeCode()+"\","+
-				"\"c_cdrType\":"+getCdrType()+","+
+				"\"c_cdrtype\":"+getCdrType()+","+
 				"\"c_timestamp\":"+getTimeStamp()+","+
 				"\"c_content\":\""+getCdrContent()+"\"}";			
 	}
-	
+	public byte[] toBytes(){
+		return new byte[1];
+	}
 	public static void main(String[] args){
 		CDRData cdr = new CDRData();
 		cdr.setMsisdn("123");

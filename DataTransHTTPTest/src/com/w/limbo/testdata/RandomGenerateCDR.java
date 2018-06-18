@@ -3,6 +3,8 @@ package com.w.limbo.testdata;
 import java.util.List;
 import java.util.Random;
 
+import com.w.limbo.avro.SerializingCDR;
+
 public class RandomGenerateCDR {
 	
 	private static final Random random = new Random();
@@ -11,7 +13,18 @@ public class RandomGenerateCDR {
 	private static final List<String> positionList = read2list.getPositionList();
 	private static final int GROUP_NUM = 10;
 	
-	public static String generateOneCdr(){
+	public static byte[] generateSerializedCDR(){
+		byte[] res = null;
+		try{
+			SerializingCDR sc = SerializingCDR.getInstance();
+			res = sc.serializeCDRToBytes(generateOneCdr());		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	private static CDRData generateOneCdr(){
 		
 		CDRData cdr = new CDRData();
 		
@@ -29,11 +42,13 @@ public class RandomGenerateCDR {
 		
 		cdr.setCdrType(0);
 		cdr.setTimeStamp(System.currentTimeMillis()/1000);
+		cdr.setRelateNum("0");
+		cdr.setCdrContent("0");
 		
-		return cdr.toString();
+		return cdr;
 	}
 	
-	public static String generateOneGroup(){
+	private static String generateOneGroup(){
 		
 		String group = "";
 		for(int i=0; i< GROUP_NUM-1 ;i++){
@@ -42,6 +57,7 @@ public class RandomGenerateCDR {
 		group += generateOneCdr();
 		return "{\"type\":\"t_cdr\", \"record\":["+group+"]}";
 	}
+	
 	public static void main(String[] args){
 		System.out.println(generateOneGroup());
 	}

@@ -1,0 +1,80 @@
+{
+    "protocol": "t_cdr",
+    "types": [
+        {
+            "type": "record",
+            "name": "t_cdr",
+            "fields": [
+                {
+                    "name": "c_cdrtype",
+                    "type": "int"
+                },
+                {
+                    "name": "c_timestamp",
+                    "type": "long"
+                },
+                {
+                    "name": "c_usernum",
+                    "type": "string"
+                },
+                {
+                    "name": "c_relatenum",
+                    "type": "string"
+                },
+				{
+                    "name": "c_areacode",
+                    "type": "string"
+                },
+				{
+                    "name": "c_homecode",
+                    "type": "string"
+                },
+				{
+                    "name": "c_content",
+                    "type": "string"
+                },
+				{
+                    "name": "c_imsi",
+                    "type": "string"
+                },
+				{
+                    "name": "c_imei",
+                    "type": "string"
+                },
+				{
+                    "name": "c_lac",
+                    "type": "string"
+                },
+				{
+                    "name": "c_ci",
+                    "type": "string"
+                },
+				{
+                    "name": "c_uli",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "type": "record",
+            "name": "docs",
+            "fields": [
+                {
+                    "name": "doc_schema_name",
+                    "type": "string"
+                },
+                {
+                    "name": "sign",
+                    "type": "string"
+                },
+                {
+                    "name": "doc_set",
+                    "type": {
+                        "type": "array",
+                        "items": "bytes"
+                    }
+                }
+            ]
+        }
+    ]
+}
