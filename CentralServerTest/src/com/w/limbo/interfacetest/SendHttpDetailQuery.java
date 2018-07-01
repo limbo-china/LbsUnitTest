@@ -23,9 +23,9 @@ public class SendHttpDetailQuery {
 	
 	public static void sendQuery(HttpClient client) throws Exception{
 		
-		String msisdn = GetMsisdnFromFile.getInstance("msisdn.txt").getMsisdnBySize(10);
+		String msisdn = GetMsisdnFromFile.getInstance("msisdn.txt").getMsisdnBySize(100);
 		
-		System.out.println(msisdn);
+		long starttime = System.currentTimeMillis();
 		ContentResponse response = client.newRequest("https://localhost:8009/detailquery/")
 				.param("token", "msisdn")
 				.param("querytype", "msisdn")
@@ -34,6 +34,9 @@ public class SendHttpDetailQuery {
 		
 		System.out.println(response.getStatus());
 		System.out.println(response.getContentAsString());
+		long endtime = System.currentTimeMillis();
+		long elapsedtime = endtime - starttime; 
+		System.out.println("elapsed time: "+ elapsedtime + " ms");
 	}
 	
 }
