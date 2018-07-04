@@ -54,7 +54,7 @@ public class AddGroupConfig {
 	}
 
 	public static void main(String[] args) {
-		AddGroupConfig jcConfig = new AddGroupConfig(20, 20);
+		AddGroupConfig jcConfig = new AddGroupConfig(20, 200);
 		jcConfig.addToRedis("172.16.18.34", 6398);
 	}
 }
