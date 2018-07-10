@@ -12,6 +12,7 @@ public class AddGroupConfig {
 	private int personPerGroup;
 	private List<String> jcGroupList;
 	private List<String> lbsGroupList;
+	private List<String> gjGroupList;
 
 	public AddGroupConfig(int totalGroup, int personPerGroup) {
 		super();
@@ -19,7 +20,7 @@ public class AddGroupConfig {
 		this.personPerGroup = personPerGroup;
 	}
 
-	public void addToRedis(String ip, int port) {
+	public void addJCLBSToRedis(String ip, int port) {
 		Jedis jedis = new Jedis(ip, port);
 		Pipeline pipeline = jedis.pipelined();
 		jcGroupList = new ArrayList<String>();
@@ -53,8 +54,31 @@ public class AddGroupConfig {
 		jedis.close();
 	}
 
+	public void addGJToRedis(String ip, int port) {
+		Jedis jedis = new Jedis(ip, port);
+		Pipeline pipeline = jedis.pipelined();
+		gjGroupList = new ArrayList<String>();
+
+		for (int i = 0; i < totalGroup; i++) {
+			Group group = Group.generateByGroupType("gjgroup");
+			gjGroupList.add(group.getGroupId());
+			pipeline.hset("GJGroup", group.getGroupId(), group.toJson());
+		}
+		pipeline.sync();
+
+		for (String groupId : gjGroupList) {
+			for (int i = 0; i < personPerGroup; i++) {
+				String ruleJson = GJRule.generateOneRuleJson();
+				pipeline.rpush(groupId, ruleJson);
+			}
+		}
+		pipeline.sync();
+		jedis.close();
+	}
+
 	public static void main(String[] args) {
 		AddGroupConfig jcConfig = new AddGroupConfig(20, 200);
-		jcConfig.addToRedis("172.16.18.34", 6398);
+		// jcConfig.addJCLBSToRedis("172.16.18.34", 6398);
+		jcConfig.addGJToRedis("172.16.18.34", 6399);
 	}
 }
