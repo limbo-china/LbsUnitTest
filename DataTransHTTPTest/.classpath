@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/jetty-io-9.4.11.v20180605.jar"/>
 	<classpathentry kind="lib" path="libs/avro-1.7.4.jar"/>
 	<classpathentry kind="lib" path="libs/avro-tools-1.7.4.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

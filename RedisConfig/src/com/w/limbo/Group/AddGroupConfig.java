@@ -20,33 +20,21 @@ public class AddGroupConfig {
 		this.personPerGroup = personPerGroup;
 	}
 
-	public void addJCLBSToRedis(String ip, int port) {
+	public void addJCToRedis(String ip, int port) {
 		Jedis jedis = new Jedis(ip, port);
 		Pipeline pipeline = jedis.pipelined();
 		jcGroupList = new ArrayList<String>();
-		lbsGroupList = new ArrayList<String>();
 
 		for (int i = 0; i < totalGroup; i++) {
 			Group group = Group.generateByGroupType("jcgroup");
 			jcGroupList.add(group.getGroupId());
 			pipeline.hset("JCGroup", group.getGroupId(), group.toJson());
 		}
-		for (int i = 0; i < totalGroup; i++) {
-			Group group = Group.generateByGroupType("lbsgroup");
-			lbsGroupList.add(group.getGroupId());
-			pipeline.hset("LBSGroup", group.getGroupId(), group.toJson());
-		}
 		pipeline.sync();
 
 		for (String groupId : jcGroupList) {
 			for (int i = 0; i < personPerGroup; i++) {
-				String personJson = JCPerson.generateOnePersonJson();
-				pipeline.rpush(groupId, personJson);
-			}
-		}
-		for (String groupId : lbsGroupList) {
-			for (int i = 0; i < personPerGroup; i++) {
-				String personJson = LBSPerson.generateOnePersonJson();
+				String personJson = JCPerson.generateOnePersonJson(groupId);
 				pipeline.rpush(groupId, personJson);
 			}
 		}
@@ -57,19 +45,13 @@ public class AddGroupConfig {
 	public void addGJToRedis(String ip, int port) {
 		Jedis jedis = new Jedis(ip, port);
 		Pipeline pipeline = jedis.pipelined();
-		gjGroupList = new ArrayList<String>();
 
+		int ruleId = 0;
 		for (int i = 0; i < totalGroup; i++) {
-			Group group = Group.generateByGroupType("gjgroup");
-			gjGroupList.add(group.getGroupId());
-			pipeline.hset("GJGroup", group.getGroupId(), group.toJson());
-		}
-		pipeline.sync();
-
-		for (String groupId : gjGroupList) {
-			for (int i = 0; i < personPerGroup; i++) {
+			String ruleIdStr = String.valueOf(ruleId++);
+			for (int j = 0; j < personPerGroup; j++) {
 				String ruleJson = GJRule.generateOneRuleJson();
-				pipeline.rpush(groupId, ruleJson);
+				pipeline.rpush("gjrule_" + ruleIdStr, ruleJson);
 			}
 		}
 		pipeline.sync();
@@ -78,7 +60,7 @@ public class AddGroupConfig {
 
 	public static void main(String[] args) {
 		AddGroupConfig jcConfig = new AddGroupConfig(20, 200);
-		// jcConfig.addJCLBSToRedis("172.16.18.34", 6398);
-		jcConfig.addGJToRedis("172.16.18.34", 6399);
+		jcConfig.addJCToRedis("172.16.18.34", 6398);
+		// jcConfig.addGJToRedis("172.16.18.34", 6399);
 	}
 }

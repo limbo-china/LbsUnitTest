@@ -1,0 +1,104 @@
+{
+    "protocol": "Data_Struct",
+    "types": [
+        {
+            "type": "record",
+            "name": "MessageSend",
+            "fields": [
+                {
+                    "name": "length",
+                    "type": "bytes"
+                },
+                {
+                    "name": "type",
+                    "type": "bytes"
+                },
+                {
+                    "name": "RoamProvince",
+                    "type": "bytes"
+                },
+                {
+                    "name": "Region",
+                    "type": "bytes"
+                },
+                {
+                    "name": "UserNumber",
+                    "type": "bytes"
+                },
+                {
+                    "name": "Time",
+                    "type": "bytes"
+                }
+                ,
+                {
+                    "name": "Action",
+                    "type": "bytes"
+                }
+                
+            ]
+            },
+            {
+             "type": "record",
+            "name": "FinContent",
+            "fields": [
+                {
+                    "name": "length",
+                    "type": "bytes"
+                },
+                {
+                    "name": "type",
+                    "type": "bytes"
+                }
+               
+                
+            ]
+             },{
+             "type": "record",
+            "name": "HbContent",
+            "fields": [
+                {
+                    "name": "length",
+                    "type": "bytes"
+                },
+                {
+                    "name": "type",
+                    "type": "bytes"
+                }
+                
+                
+            ]
+             },{
+             "type": "record",
+            "name": "RepContent",
+            "fields": [
+                {
+                    "name": "length",
+                    "type": "bytes"
+                },
+                {
+                    "name": "type",
+                    "type": "bytes"
+                }
+                
+            ]
+             },{
+             "type": "record",
+            "name": "ReqContent",
+            "fields": [
+                {
+                    "name": "length",
+                    "type": "bytes"
+                },
+                {
+                    "name": "type",
+                    "type": "bytes"
+                },
+                {
+                    "name": "RoamProvince",
+                    "type": "bytes"
+                }
+                
+            ]
+        }
+    ]
+}

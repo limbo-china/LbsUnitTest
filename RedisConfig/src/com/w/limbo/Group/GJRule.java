@@ -12,8 +12,8 @@ import com.google.gson.Gson;
 
 public class GJRule {
 
-	private String ruleId;
-	private String ruleName;
+	private String groupId;
+	private String groupName;
 	private String phone;
 	private String provinceId;
 	private String provinceName;
@@ -21,8 +21,11 @@ public class GJRule {
 	private String createTime;
 	private String updateBy;
 	private String updateTime;
+	private String source;
 
 	protected static int increRuleID = 0;
+	private static String[] ids = { "0", "1", "2", "3", "4", "5", "6", "7",
+			"8", "9", "10" };
 
 	private static FileInputStream msisdnInput;
 	private static Scanner msisdnScan;
@@ -58,16 +61,16 @@ public class GJRule {
 		}
 	}
 
-	public String getRuleId() {
-		return ruleId;
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
 	}
 
-	public void setRuleId(String ruleId) {
-		this.ruleId = ruleId;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
-	public void setRuleName(String ruleName) {
-		this.ruleName = ruleName;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	public void setPhone(String phone) {
@@ -105,8 +108,9 @@ public class GJRule {
 
 	private static GJRule generateOneRule() {
 		GJRule rule = new GJRule();
-		rule.setRuleId(String.valueOf(increRuleID++));
-		rule.setRuleName(rule.getRuleId());
+		String id = ids[random.nextInt(ids.length)];
+		rule.setGroupId("group_" + id);
+		rule.setGroupName("groupName_" + id);
 		rule.setPhone(msisdnList.get(random.nextInt(msisdnList.size())));
 		String province = provinceList.get(random.nextInt(provinceList.size()));
 		rule.setProvinceId(province.split(";")[0]);
@@ -115,6 +119,7 @@ public class GJRule {
 		rule.setCreateTime(stampToDate(System.currentTimeMillis()));
 		rule.setUpdateBy("testUpdateBy");
 		rule.setUpdateTime(stampToDate(System.currentTimeMillis()));
+		rule.setSource("source_" + id);
 
 		return rule;
 	}

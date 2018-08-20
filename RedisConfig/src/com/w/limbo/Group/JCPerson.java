@@ -46,24 +46,23 @@ public class JCPerson {
 		}
 	}
 
+	private String groupId;
 	private String phone;
-	private String provinceId;
-	private String provinceName;
 	private String createBy;
 	private String createTime;
 	private String updateBy;
 	private String updateTime;
 
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public void setProvinceId(String provinceId) {
-		this.provinceId = provinceId;
-	}
-
-	public void setProvinceName(String provinceName) {
-		this.provinceName = provinceName;
 	}
 
 	public void setCreateBy(String createBy) {
@@ -82,17 +81,15 @@ public class JCPerson {
 		this.updateTime = updateTime;
 	}
 
-	public static String generateOnePersonJson() {
+	public static String generateOnePersonJson(String groupId) {
 		Gson gson = new Gson();
-		return gson.toJson(generateOnePerson());
+		return gson.toJson(generateOnePerson(groupId));
 	}
 
-	private static JCPerson generateOnePerson() {
+	private static JCPerson generateOnePerson(String groupId) {
 		JCPerson person = new JCPerson();
+		person.setGroupId(groupId);
 		person.setPhone(msisdnList.get(random.nextInt(msisdnList.size())));
-		String province = provinceList.get(random.nextInt(provinceList.size()));
-		person.setProvinceId(province.split(";")[0]);
-		person.setProvinceName(province.split(";")[1]);
 		person.setCreateBy("testCreateBy");
 		person.setCreateTime(stampToDate(System.currentTimeMillis()));
 		person.setUpdateBy("testUpdateBy");
